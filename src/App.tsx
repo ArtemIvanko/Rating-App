@@ -1,7 +1,3 @@
-export const App = () => {
-  return (
-    <div>
-      <h1>Hello, World!</h1>
-    </div>
-  );
-};
+import { Router } from "./pages/Router";
+
+export const App = () => <Router />;
