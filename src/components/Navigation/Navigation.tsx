@@ -10,7 +10,6 @@ export const Navigation = () => (
 
 const Root = styled("div")({
   display: "flex",
-  justifyContent: "space-between",
   flexDirection: "column",
   height: "100vh",
 });
