@@ -2,6 +2,8 @@ import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { createUserWithEmailAndPassword } from "@firebase/auth";
+import { auth } from "@/firebaseConfig";
 
 const schema = yup.object({
   username: yup.string().required().label("User Name"),
@@ -19,13 +21,16 @@ export const useSignUp = () => {
     mode: "onBlur",
   });
 
-  const handleFormSubmit = useCallback(async (data: FormValue) => {
-    try {
-      console.log(data);
-    } catch (error) {
-      throw new Error(`Error while getting data: ${error}`);
-    }
-  }, []);
+  const handleFormSubmit = useCallback(
+    async (data: FormValue) => {
+      if (!isRegistered) {
+        setIsRegistered(true);
+        await createUserWithEmailAndPassword(auth, data.email, data.password);
+        window.location.reload();
+      }
+    },
+    [isRegistered],
+  );
 
   return {
     control,
