@@ -3,8 +3,14 @@ import styled from "@/DefaultTheme";
 import { Button } from "@mui/material";
 import { Login, SignUp } from "@shared/auth";
 import { useDialog } from "@/hooks/useDialog";
+import { ProfileBadge } from "@/pages/Profile";
+import { useCallback, useContext } from "react";
+import { AuthContext } from "@/context";
+import { auth } from "@/firebaseConfig";
 
 export const Navigation = () => {
+  const { isUserLoggedIn } = useContext(AuthContext);
+
   const {
     dialogProps: signUpDialogProps,
     open: openSignUpDialog,
@@ -25,19 +31,25 @@ export const Navigation = () => {
     },
   });
 
+  const handleLogout = useCallback(() => auth.signOut(), []);
+
   return (
     <NavBar>
       Rating App
-      <div>
-        <Button onClick={openLoginDialog}>Log In</Button>
-        <Dialog {...loginDialogProps}>
-          <Login />
-        </Dialog>
-        <Button onClick={openSignUpDialog}>Register</Button>
-        <Dialog {...signUpDialogProps}>
-          <SignUp />
-        </Dialog>
-      </div>
+      {!isUserLoggedIn ? (
+        <div>
+          <Button onClick={openLoginDialog}>Log In</Button>
+          <Dialog {...loginDialogProps}>
+            <Login />
+          </Dialog>
+          <Button onClick={openSignUpDialog}>Register</Button>
+          <Dialog {...signUpDialogProps}>
+            <SignUp />
+          </Dialog>
+        </div>
+      ) : (
+        <ProfileBadge onLogoutClick={handleLogout} />
+      )}
     </NavBar>
   );
 };
