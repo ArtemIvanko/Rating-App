@@ -6,13 +6,23 @@ export const SignUp = () => {
 
   return (
     <Form
-      title="Welcome back!"
-      subtitle="Please enter your details to sign in"
-      buttonLabel="Sign in"
+      title="Join us!"
+      subtitle="Please enter your details to sign up"
+      buttonLabel="Get started"
       children={
         <>
-          <FormTextField name="username" control={control} />
-          <FormTextField name="email" control={control} />
+          <FormTextField
+            name="username"
+            control={control}
+            placeholder="That's how we gonna know you"
+            label="Username"
+          />
+          <FormTextField
+            name="email"
+            control={control}
+            placeholder="Enter your email"
+            label="E-mail"
+          />
           <PasswordFieldText name="password" control={control} />
         </>
       }
