@@ -3,7 +3,6 @@ import {
   Dialog as MUIDialog,
   DialogProps as MUIDialogProps,
 } from "@mui/material";
-
 import styled from "@/DefaultTheme";
 
 export interface IDialogProps extends MUIDialogProps {
