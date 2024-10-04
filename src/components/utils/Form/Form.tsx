@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 import styled from "@/DefaultTheme";
-import { Button, TextFieldProps, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
-type IFormProps = TextFieldProps & {
+type IFormProps = {
   children?: ReactNode;
   onSubmit?: () => void;
   title?: string;
@@ -16,7 +16,6 @@ export const Form = ({
   title,
   subtitle,
   buttonLabel,
-  ...restProps
 }: IFormProps) => {
   return (
     <StyledForm onSubmit={onSubmit}>
