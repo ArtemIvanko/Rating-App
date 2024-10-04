@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Navigation } from "@shared/Navigation";
-import { Login } from "@shared/auth";
+import { Login, SignUp } from "@shared/auth";
 
 export const Router = () => (
   <BrowserRouter>
