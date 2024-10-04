@@ -27,6 +27,8 @@ export const PasswordFieldText = <TFieldValues extends FieldValues>({
       name={name}
       control={control}
       type={isVisible ? "text" : type}
+      label="Password"
+      placeholder="Create your password"
       InputProps={{
         endAdornment: (
           <IconButton onClick={toggleVisibility}>
