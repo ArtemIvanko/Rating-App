@@ -1,18 +1,21 @@
-import { Form } from "@utils/Form";
-import { TextField } from "@mui/material";
+import { Form, FormTextField } from "@utils/Form";
+import { useLogin } from "@/hooks/useLogin";
 
 export const Login = () => {
+  const { control, handleSubmit } = useLogin();
+
   return (
     <Form
       title="Welcome back!"
       subtitle="Please enter your details to sign in"
       buttonLabel="Sign in"
       children={
-        <TextField
-          label="E-mail or Username"
-          placeholder="Enter your email/username"
-        />
+        <>
+          <FormTextField name="login" control={control} />
+          <PasswordFieldText name="password" control={control} />
+        </>
       }
+      onSubmit={handleSubmit}
     />
   );
 };
