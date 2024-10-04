@@ -20,7 +20,6 @@ const Root = styled("div")({
 
 const ContentWrapper = styled("main")(({ theme }) => ({
   display: "flex",
-  justifyContent: "center",
   alignItems: "center",
   padding: "2rem",
   marginTop: "5rem",
