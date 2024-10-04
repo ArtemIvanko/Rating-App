@@ -1,5 +1,5 @@
 import { Form, FormTextField, PasswordFieldText } from "@utils/Form";
-import { useSignUp } from "@/hooks";
+import { useSignUp } from "@/hooks/useAuth";
 
 export const SignUp = () => {
   const { control, handleSubmit } = useSignUp();
