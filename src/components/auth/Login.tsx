@@ -11,7 +11,12 @@ export const Login = () => {
       buttonLabel="Sign in"
       children={
         <>
-          <FormTextField name="login" control={control} />
+          <FormTextField
+            name="login"
+            control={control}
+            label="E-mail"
+            placeholder="Please enter your email"
+          />
           <PasswordFieldText name="password" control={control} />
         </>
       }
