@@ -1,7 +1,9 @@
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import { auth } from "@/firebaseConfig";
+import { signInWithEmailAndPassword } from "@firebase/auth";
 
 const schema = yup.object({
   login: yup.string().required("Login is required"),
@@ -16,19 +18,24 @@ const defaultValues: FormValue = {
 };
 
 export const useLogin = () => {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
   const { control, handleSubmit } = useForm<FormValue>({
     resolver: yupResolver(schema),
     mode: "onBlur",
     defaultValues,
   });
 
-  const handleFormSubmit = useCallback(async (data: FormValue) => {
-    try {
-      console.log(data);
-    } catch (error) {
-      throw new Error(`Error while getting data: ${error}`);
-    }
-  }, []);
+  const handleFormSubmit = useCallback(
+    async (data: FormValue) => {
+      if (!isSignedIn) {
+        setIsSignedIn(true);
+        await signInWithEmailAndPassword(auth, data.login, data.password);
+        window.location.reload();
+      }
+    },
+    [isSignedIn],
+  );
 
   return {
     control,
