@@ -16,18 +16,16 @@ export const Form = ({
   title,
   subtitle,
   buttonLabel,
-}: IFormProps) => {
-  return (
-    <StyledForm onSubmit={onSubmit}>
-      <Typography variant="h5">{title}</Typography>
-      <Typography variant="body2">{subtitle}</Typography>
-      <FieldsContainer>{children}</FieldsContainer>
-      <Button type="submit" fullWidth title={buttonLabel}>
-        {buttonLabel}
-      </Button>
-    </StyledForm>
-  );
-};
+}: IFormProps) => (
+  <StyledForm onSubmit={onSubmit}>
+    <Typography variant="h5">{title}</Typography>
+    <Typography variant="body2">{subtitle}</Typography>
+    <FieldsContainer>{children}</FieldsContainer>
+    <Button type="submit" fullWidth title={buttonLabel}>
+      {buttonLabel}
+    </Button>
+  </StyledForm>
+);
 
 const StyledForm = styled("form")({
   display: "flex",
