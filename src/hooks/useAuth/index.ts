@@ -1,2 +1,2 @@
-export * from "src/hooks/useAuth/useLogin";
-export * from "src/hooks/useAuth/useSignUp";
+export * from "./useLogin";
+export * from "./useSignUp";
