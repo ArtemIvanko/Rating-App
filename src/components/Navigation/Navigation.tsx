@@ -1,15 +1,60 @@
+import { Dialog } from "@utils/Dialog";
 import styled from "@/DefaultTheme";
-import { Outlet } from "react-router";
+import { Button } from "@mui/material";
+import { Login, SignUp } from "@shared/auth";
+import { useDialog } from "@/hooks/useDialog";
 
-export const Navigation = () => (
-  <Root>
-    <div>Navigation</div>
-    <Outlet />
-  </Root>
-);
+export const Navigation = () => {
+  const {
+    dialogProps: signUpDialogProps,
+    open: openSignUpDialog,
+    close: closeSignUpDialog,
+  } = useDialog({
+    onClose: () => {
+      closeSignUpDialog();
+    },
+  });
 
-const Root = styled("div")({
+  const {
+    dialogProps: loginDialogProps,
+    open: openLoginDialog,
+    close: closeLoginDialog,
+  } = useDialog({
+    onClose: () => {
+      closeLoginDialog();
+    },
+  });
+
+  return (
+    <NavBar>
+      Rating App
+      <div>
+        <Button onClick={openLoginDialog}>Log In</Button>
+        <Dialog {...loginDialogProps}>
+          <Login />
+        </Dialog>
+        <Button onClick={openSignUpDialog}>Register</Button>
+        <Dialog {...signUpDialogProps}>
+          <SignUp />
+        </Dialog>
+      </div>
+    </NavBar>
+  );
+};
+
+const NavBar = styled("nav")(({ theme }) => ({
+  position: "fixed",
+  width: "100%",
   display: "flex",
-  flexDirection: "column",
-  height: "100vh",
-});
+  alignItems: "center",
+  justifyContent: "space-between",
+  padding: "0.5rem",
+  borderRadius: "0 0 1.25rem 1.25rem",
+  background: theme.palette.common.white,
+  color: theme.palette.primary.logo,
+  boxShadow: `0 1px 3px 0 ${theme.palette.grey[400]}`,
+  zIndex: "1299",
+  [theme.breakpoints.up("lg")]: {
+    padding: "0 2rem",
+  },
+}));
