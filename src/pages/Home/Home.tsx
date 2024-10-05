@@ -6,8 +6,13 @@ import styled from "@/DefaultTheme";
 import { AuthContext } from "@/context";
 import { Loader } from "@utils/Loader";
 
+interface User {
+  uid: string;
+  username: string;
+}
+
 export const Home = () => {
-  const [users, setUsers] = useState<{ username: string }[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const { isFetching, setIsFetching } = useContext(AuthContext);
 
   useEffect(() => {
@@ -16,10 +21,21 @@ export const Home = () => {
       const db = getDatabase(app);
       const usersRef = ref(db, "users");
 
-      const users = await get(usersRef);
+      try {
+        const usersSnapshot = await get(usersRef);
 
-      if (users.exists()) {
-        setUsers(Object.values(users.val()));
+        if (usersSnapshot.exists()) {
+          const usersData = usersSnapshot.val();
+          const usersList: User[] = Object.entries(usersData).map(
+            ([uid, data]: [string, any]) => ({
+              uid,
+              username: data.username,
+            }),
+          );
+          setUsers(usersList);
+        }
+      } catch (error) {
+        throw new Error("Failed to fetch users data.");
       }
 
       setIsFetching(false);
@@ -35,9 +51,16 @@ export const Home = () => {
   return (
     <Root>
       <h1>Home</h1>
-      {users.map((user) => (
-        <Card username={user.username} key={user.username} />
-      ))}
+      <CardsContainer>
+        {users.map((item) => (
+          <Card
+            username={item.username}
+            key={item.uid}
+            link={`/item/${item.uid}`}
+            itemId={item.uid}
+          />
+        ))}
+      </CardsContainer>
     </Root>
   );
 };
@@ -45,6 +68,13 @@ export const Home = () => {
 const Root = styled("div")({
   display: "flex",
   flexDirection: "column",
-  height: "100vh",
+  height: "100%",
   width: "100%",
+});
+
+const CardsContainer = styled("div")({
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "1rem",
+  padding: "1rem",
 });
