@@ -1,11 +1,12 @@
 import styled from "@/DefaultTheme";
 import { Avatar, Card as MuiCard } from "@mui/material";
+import { memo } from "react";
 
 export interface ICardProps {
   username: string;
 }
 
-export const Card = ({ username }: ICardProps) => {
+export const Card = memo(({ username }: ICardProps) => {
   return (
     <StyledCard>
       <Avatar alt="Profile picture" src="" />
@@ -15,7 +16,7 @@ export const Card = ({ username }: ICardProps) => {
       </UserInfo>
     </StyledCard>
   );
-};
+});
 
 const StyledCard = styled(MuiCard)(({ theme }) => ({
   display: "flex",
