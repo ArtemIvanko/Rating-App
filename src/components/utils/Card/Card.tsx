@@ -2,7 +2,7 @@ import styled from "@/DefaultTheme";
 import { Avatar, Card as MuiCard } from "@mui/material";
 import { memo } from "react";
 import { NavLink } from "react-router-dom";
-import { AverageRating, RatingComponent } from "src/components/Rating";
+import { AverageRating, RatingComponent } from "src/components/Feedback";
 
 export interface ICardProps {
   username: string;

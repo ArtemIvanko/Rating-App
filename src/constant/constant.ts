@@ -1,1 +1,1 @@
-export const BRAND_NAME = "Rating App";
+export const BRAND_NAME = "Feedback App";
