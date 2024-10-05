@@ -3,7 +3,7 @@ import styled from "@/DefaultTheme";
 import { Button } from "@mui/material";
 import { Login, SignUp } from "@shared/auth";
 import { useDialog } from "@/hooks/useDialog";
-import { ProfileBadge } from "@/pages/Profile";
+import { ProfileBadge } from "src/components/Profile";
 import { useCallback, useContext } from "react";
 import { AuthContext } from "@/context";
 import { auth } from "@/firebaseConfig";
