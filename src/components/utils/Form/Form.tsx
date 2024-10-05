@@ -33,7 +33,7 @@ const StyledForm = styled("form")({
   justifyContent: "center",
   alignItems: "center",
   width: "400px",
-  height: "600px",
+  height: "100%",
   background: "white",
   padding: "1rem 2.5rem",
 });
