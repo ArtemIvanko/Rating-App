@@ -1,18 +1,25 @@
 import styled from "@/DefaultTheme";
 import { Avatar, Card as MuiCard } from "@mui/material";
 import { memo } from "react";
+import { NavLink } from "react-router-dom";
+import { AverageRating, RatingComponent } from "@utils/Rating";
 
 export interface ICardProps {
   username: string;
+  link: string;
+  itemId?: string;
 }
 
-export const Card = memo(({ username }: ICardProps) => {
+export const Card = memo(({ username, link, itemId }: ICardProps) => {
   return (
     <StyledCard>
-      <Avatar alt="Profile picture" src="" />
       <UserInfo>
-        <div>{username}</div>
-        <div>123</div>
+        <Avatar alt="Profile picture" src="" />
+        <NavLink to={link}>
+          <p>{username}</p>
+        </NavLink>
+        <AverageRating itemId={itemId} />
+        <RatingComponent itemId={itemId} />
       </UserInfo>
     </StyledCard>
   );
@@ -21,8 +28,9 @@ export const Card = memo(({ username }: ICardProps) => {
 const StyledCard = styled(MuiCard)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  height: "5rem",
-  width: "15rem",
+  justifyContent: "center",
+  height: "30rem",
+  width: "20rem",
   background: theme.palette.grey[200],
   margin: "1rem",
   padding: "1rem",
