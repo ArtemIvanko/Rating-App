@@ -7,20 +7,21 @@ import {
   useMemo,
   useState,
 } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { get, getDatabase, ref } from "firebase/database";
 import { auth } from "@/firebaseConfig";
 
 interface IUserData {
-  email: string;
-  userName: string;
-  password: string;
+  email: string | null;
+  username: string | null;
+  uid: string;
 }
 
 interface IAuthContextValue {
   isFetching: boolean;
   setIsFetching: Dispatch<SetStateAction<boolean>>;
   isUserLoggedIn: boolean;
-  user?: IUserData | null;
+  user: IUserData | null;
 }
 
 export const AuthContext = createContext<IAuthContextValue>(
@@ -33,20 +34,39 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isUserLoggedIn, setUserLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, initializeUser);
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      async (currentUser: User | null) => {
+        if (currentUser) {
+          const database = getDatabase();
+          const userRef = ref(database, `users/${currentUser.uid}`);
+          const snapshot = await get(userRef);
+
+          if (snapshot.exists()) {
+            const userData = snapshot.val();
+            setUser({
+              email: userData.email,
+              username: userData.username,
+              uid: currentUser.uid,
+            });
+          } else {
+            setUser({
+              email: currentUser.email,
+              username: currentUser.displayName || "Anonymous",
+              uid: currentUser.uid,
+            });
+          }
+
+          setUserLoggedIn(true);
+        } else {
+          setUser(null);
+          setUserLoggedIn(false);
+        }
+      },
+    );
 
     return unsubscribe;
   }, []);
-
-  const initializeUser = async (currentUser: any) => {
-    if (currentUser) {
-      setUser({ ...currentUser });
-      setUserLoggedIn(true);
-    } else {
-      setUser(null);
-      setUserLoggedIn(false);
-    }
-  };
 
   const contextValue = useMemo(
     () => ({ isFetching, setIsFetching, user, isUserLoggedIn }),

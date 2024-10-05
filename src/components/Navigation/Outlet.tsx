@@ -15,7 +15,7 @@ export const Outlet: FC = () => (
 const Root = styled("div")({
   display: "flex",
   flexDirection: "column",
-  height: "100vh",
+  height: "100%",
 });
 
 const ContentWrapper = styled("main")(({ theme }) => ({

@@ -7,6 +7,8 @@ import { ProfileBadge } from "@/pages/Profile";
 import { useCallback, useContext } from "react";
 import { AuthContext } from "@/context";
 import { auth } from "@/firebaseConfig";
+import { NavLink } from "react-router-dom";
+import { BRAND_NAME } from "@/constant/constant";
 
 export const Navigation = () => {
   const { isUserLoggedIn } = useContext(AuthContext);
@@ -35,7 +37,7 @@ export const Navigation = () => {
 
   return (
     <NavBar>
-      Rating App
+      <NavLink to="/">{BRAND_NAME}</NavLink>
       {!isUserLoggedIn ? (
         <div>
           <Button onClick={openLoginDialog}>Log In</Button>

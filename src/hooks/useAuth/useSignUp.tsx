@@ -56,7 +56,7 @@ export const useSignUp = () => {
 
         window.location.reload();
       } catch (error: any) {
-        console.error("Error during sign up:", error);
+        throw new Error(`Error while getting data: ${error}`);
       } finally {
         setIsRegistered(false);
       }
