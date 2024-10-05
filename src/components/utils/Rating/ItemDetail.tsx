@@ -27,23 +27,15 @@ export const ItemDetail = () => {
     const database = getDatabase(app);
     const itemRef = ref(database, `users/${itemId}`);
 
-    const unsubscribe = onValue(
-      itemRef,
-      (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-          setItem(data);
-        } else {
-          setError("Item not found.");
-        }
-        setLoading(false);
-      },
-      (error) => {
-        setError("Failed to fetch item data.");
-        setLoading(false);
-        throw new Error("Failed to fetch item data.");
-      },
-    );
+    const unsubscribe = onValue(itemRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setItem(data);
+      } else {
+        setError("Item not found.");
+      }
+      setLoading(false);
+    });
 
     return () => unsubscribe();
   }, [itemId]);
