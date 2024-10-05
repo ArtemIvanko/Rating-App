@@ -59,7 +59,7 @@ export const RatingComponent = ({ itemId }: RatingComponentProps) => {
         rating: value,
       });
 
-      setMessage("Rating submitted successfully!");
+      setMessage("Feedback submitted successfully!");
     } catch (error: any) {
       setMessage("Failed to submit rating.");
     }

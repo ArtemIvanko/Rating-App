@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Outlet } from "@shared/Navigation";
 import { Home } from "@/pages/Home";
-import { ItemDetail } from "@utils/Rating/ItemDetail";
+import { ItemDetail } from "@shared/Feedback";
 
 export const Router = () => (
   <BrowserRouter>
