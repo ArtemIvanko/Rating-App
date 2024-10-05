@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Button, Rating, RatingProps, Typography } from "@mui/material";
+import { Button, Rating, RatingProps, Typography } from "@mui/material";
 import { AuthContext } from "@/context/AuthContext";
 import { get, getDatabase, ref, set } from "firebase/database";
 import app from "@/firebaseConfig";
@@ -66,7 +66,7 @@ export const RatingComponent = ({ itemId }: RatingComponentProps) => {
   };
 
   return (
-    <Box mt={2}>
+    <div>
       <Typography component="legend">Rate this item:</Typography>
       <Rating
         name="rating"
@@ -75,16 +75,16 @@ export const RatingComponent = ({ itemId }: RatingComponentProps) => {
           setValue(newValue);
         }}
       />
-      <Box mt={1}>
+      <div>
         <Button variant="contained" color="primary" onClick={handleSubmit}>
           Submit Rating
         </Button>
-      </Box>
+      </div>
       {message && (
         <Typography variant="body2" color="textSecondary" mt={1}>
           {message}
         </Typography>
       )}
-    </Box>
+    </div>
   );
 };
