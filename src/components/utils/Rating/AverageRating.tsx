@@ -17,30 +17,24 @@ export const AverageRating = ({ itemId }: AverageRatingProps) => {
     const database = getDatabase(app);
     const ratingsRef = ref(database, `items/${itemId}/ratings`);
 
-    const unsubscribe = onValue(
-      ratingsRef,
-      (snapshot) => {
-        const ratingsData = snapshot.val();
+    const unsubscribe = onValue(ratingsRef, (snapshot) => {
+      const ratingsData = snapshot.val();
 
-        if (ratingsData) {
-          const ratingsArray = Object.values(ratingsData);
-          const total = ratingsArray.reduce(
-            (acc: number, rating: any) => acc + rating.rating,
-            0,
-          );
-          const averageRating = total / ratingsArray.length;
+      if (ratingsData) {
+        const ratingsArray = Object.values(ratingsData);
+        const total = ratingsArray.reduce(
+          (acc: number, rating: any) => acc + rating.rating,
+          0,
+        );
+        const averageRating = total / ratingsArray.length;
 
-          setAverage(averageRating);
-          setTotalRatings(ratingsArray.length);
-        } else {
-          setAverage(0);
-          setTotalRatings(0);
-        }
-      },
-      (error) => {
-        throw new Error("Failed to fetch ratings data.");
-      },
-    );
+        setAverage(averageRating);
+        setTotalRatings(ratingsArray.length);
+      } else {
+        setAverage(0);
+        setTotalRatings(0);
+      }
+    });
 
     return () => unsubscribe();
   }, [itemId]);

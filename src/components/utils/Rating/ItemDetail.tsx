@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { RatingComponent } from "./RatingComponent";
 import { AverageRating } from "./AverageRating";
 import { getDatabase, onValue, ref } from "firebase/database";
 import app from "@/firebaseConfig";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "@/context";
 
 interface Item {
   title: string;
@@ -14,7 +13,6 @@ interface Item {
 
 export const ItemDetail = () => {
   const { itemId } = useParams();
-  const { user } = useContext(AuthContext);
   const [item, setItem] = useState<Item | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
