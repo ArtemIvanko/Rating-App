@@ -70,7 +70,6 @@ export const ItemDetail = () => {
 
   return (
     <Box p={4}>
-      <Typography>{user?.username}</Typography>
       <Typography variant="h4" gutterBottom>
         {item?.title}
       </Typography>
