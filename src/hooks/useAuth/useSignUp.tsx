@@ -53,6 +53,8 @@ export const useSignUp = () => {
           email: data.email,
           createdAt: new Date().toISOString(),
         });
+
+        window.location.reload();
       } catch (error: any) {
         console.error("Error during sign up:", error);
       } finally {
