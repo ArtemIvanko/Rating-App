@@ -1,7 +1,8 @@
-export const App = () => {
-  return (
-    <div>
-      <h1>Hello, World!</h1>
-    </div>
-  );
-};
+import { Router } from "./pages/Router";
+import { Providers } from "./Providers";
+
+export const App = () => (
+  <Providers>
+    <Router />
+  </Providers>
+);
