@@ -1,25 +1,36 @@
 import { get, getDatabase, ref } from "firebase/database";
 import app from "@/firebaseConfig";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Card } from "@utils/Card";
 import styled from "@/DefaultTheme";
+import { AuthContext } from "@/context";
+import { Loader } from "@utils/Loader";
 
 export const Home = () => {
   const [users, setUsers] = useState<{ username: string }[]>([]);
+  const { isFetching, setIsFetching } = useContext(AuthContext);
 
-  const fetchUsers = async () => {
-    const db = getDatabase(app);
-    const usersRef = ref(db, "users/");
-    const snapshot = await get(usersRef);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setIsFetching(true);
+      const db = getDatabase(app);
+      const usersRef = ref(db, "users");
 
-    if (snapshot.exists()) {
-      setUsers(Object.values(snapshot.val()));
-    } else {
-      console.log("No data available");
-    }
-  };
+      const users = await get(usersRef);
 
-  fetchUsers();
+      if (users.exists()) {
+        setUsers(Object.values(users.val()));
+      }
+
+      setIsFetching(false);
+    };
+
+    fetchUsers();
+  }, [setIsFetching]);
+
+  if (isFetching) {
+    return <Loader />;
+  }
 
   return (
     <Root>
@@ -35,4 +46,5 @@ const Root = styled("div")({
   display: "flex",
   flexDirection: "column",
   height: "100vh",
+  width: "100%",
 });
