@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { Button, TextField, Typography } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { Typography } from "@mui/material";
 import { AuthContext } from "@/context/AuthContext";
 import { getDatabase, push, ref, set } from "firebase/database";
 import app from "@/firebaseConfig";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Form, FormTextField } from "@utils/Form";
+import styled from "@/DefaultTheme";
 
 interface CommentForm {
   comment: string;
@@ -63,39 +65,27 @@ export const CommentComponent: React.FC<CommentComponentProps> = ({
     }
   };
 
+  const handleFormSubmit = handleSubmit(onSubmit);
+
   return (
-    <div>
-      <Typography component="legend">Add a Comment:</Typography>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name="comment"
-          control={control}
-          defaultValue=""
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              label="Your Comment"
-              variant="outlined"
-              fullWidth
-              multiline
-              rows={4}
-              margin="normal"
-              error={!!fieldState.error}
-              helperText={fieldState.error ? fieldState.error.message : null}
-            />
-          )}
-        />
-        <div>
-          <Button type="submit" variant="contained" color="primary">
-            Submit Comment
-          </Button>
-        </div>
-      </form>
+    <>
+      <StyledForm
+        title={"Add a Comment:"}
+        onSubmit={handleFormSubmit}
+        buttonLabel={"Submit comment"}
+      >
+        <FormTextField name="comment" control={control} />
+      </StyledForm>
       {message && (
         <Typography variant="body2" color="textSecondary" mt={1}>
           {message}
         </Typography>
       )}
-    </div>
+    </>
   );
 };
+
+const StyledForm = styled(Form)({
+  alignItems: "start",
+  width: "100%",
+});
