@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { RatingComponent } from "@shared/Feedback/Rating/RatingComponent";
-import { AverageRating } from "@shared/Feedback/Rating/AverageRating";
+import { AverageRating, RatingComponent } from "@shared/Feedback";
 import { getDatabase, onValue, ref } from "firebase/database";
 import app from "@/firebaseConfig";
 import { useParams } from "react-router-dom";
