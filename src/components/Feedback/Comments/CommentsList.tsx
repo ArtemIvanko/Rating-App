@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
+  Button,
   Divider,
   List,
   ListItem,
   ListItemText,
   Typography,
 } from "@mui/material";
-import { getDatabase, onValue, ref } from "firebase/database";
+import { getDatabase, onValue, ref, remove } from "firebase/database";
 import app from "@/firebaseConfig";
+import { AuthContext } from "@/context";
 
 interface Comment {
   commentId: string;
@@ -22,6 +24,7 @@ interface CommentsListProps {
 }
 
 export const CommentsList: React.FC<CommentsListProps> = ({ itemId }) => {
+  const { user } = useContext(AuthContext);
   const [comments, setComments] = useState<Comment[]>([]);
 
   useEffect(() => {
@@ -60,6 +63,19 @@ export const CommentsList: React.FC<CommentsListProps> = ({ itemId }) => {
     return () => unsubscribe();
   }, [itemId]);
 
+  const handleDeleteComment = (commentId: string) => {
+    const database = getDatabase(app);
+    const commentRef = ref(database, `items/${itemId}/comments/${commentId}`);
+
+    remove(commentRef)
+      .then(() => {
+        throw new Error("Comment deleted successfully.");
+      })
+      .catch((error) => {
+        throw new Error(`Failed to delete comment: ${error}`);
+      });
+  };
+
   return (
     <div>
       <Typography variant="h6">Comments:</Typography>
@@ -82,6 +98,13 @@ export const CommentsList: React.FC<CommentsListProps> = ({ itemId }) => {
                         {new Date(comment.timestamp).toLocaleString()}
                       </Typography>
                       {` — ${comment.comment}`}
+                      {user?.admin && (
+                        <Button
+                          onClick={() => handleDeleteComment(comment.commentId)}
+                        >
+                          Delete
+                        </Button>
+                      )}
                     </>
                   }
                 />
