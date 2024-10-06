@@ -15,6 +15,7 @@ interface IUserData {
   email: string | null;
   username: string | null;
   uid: string;
+  admin?: boolean | null;
 }
 
 interface IAuthContextValue {
@@ -48,12 +49,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               email: userData.email,
               username: userData.username,
               uid: currentUser.uid,
+              admin: userData.admin || null,
             });
           } else {
             setUser({
               email: currentUser.email,
               username: currentUser.displayName || "Anonymous",
               uid: currentUser.uid,
+              admin: null,
             });
           }
 
