@@ -1,3 +1,5 @@
+# Important! .env shouldn't be here, but in case of testing, I've included it. It's not a good practice to include .env in the repository.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
