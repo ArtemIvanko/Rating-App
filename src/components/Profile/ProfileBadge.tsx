@@ -47,6 +47,7 @@ export const ProfileBadge = ({ onLogoutClick }: IProfileBadgeProps) => {
             <Typography variant="subtitle1">{user?.username}</Typography>
             <Typography lineHeight="1">{user?.email}</Typography>
             <Typography variant="subtitle2">Profile settings</Typography>
+            {user?.admin && <Typography variant="subtitle2">Admin</Typography>}
           </div>
         </ProfileInfoContainer>
         <Divider />
